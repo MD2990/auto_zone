@@ -5,9 +5,9 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import Badge from 'react-bootstrap/Badge';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, InputGroup, FormControl } from 'react-bootstrap';
 
 export default function Manage() {
 	return (
@@ -17,61 +17,93 @@ export default function Manage() {
 					Home
 				</Button>
 			</Link>
-			<div className={styles.center_main_div}>
-				<Container>
-					<Form>
-						<Row>
-							<Col xs={12} md={8}>
-								<Form.Label>Email</Form.Label>
-								<Form.Control placeholder='Enter email' />
-							</Col>
-						</Row>
 
-						<Form.Group as={Col} xs={3}>
-							<Form.Label>Password</Form.Label>
-							<Form.Control placeholder='Password' />
-						</Form.Group>
+			<Jumbotron>
+				<Form>
+					<Row className='justify-content-md-center mb-4'>
+						{' '}
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}> Make</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>Model</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+					</Row>
+					<Row className='justify-content-md-center mb-4'>
+						{' '}
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>Year</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>VIN</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+					</Row>{' '}
+					<Row className='justify-content-md-center mb-5'>
+						{' '}
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>Color</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>Mileage</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+					</Row>
+					<Row className='justify-content-md-center mb-5'>
+						{' '}
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>
+								Rental Fees{' '}
+							</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+						<Col xm sm='4'>
+							{' '}
+							<Form.Label className={styles.label_text}>
+								Registration Expiry Date
+							</Form.Label>
+							<Form.Control size='lg' placeholder='---' />
+						</Col>
+					</Row>
+					{/* 	<Form.Label>Email</Form.Label>
+						<Form.Control className='mb-2' placeholder='Enter email' />
+						<Form.Label>---</Form.Label>
+						<Form.Control className='mb-2' placeholder='---' />
+						<Form.Label>Address</Form.Label>
+						<Form.Control className='mb-2' placeholder='1234 Main St' />
+						<Form.Label>---</Form.Label>
+						<Form.Control className='mb-2' placeholder='---' />
+						<Form.Label>Address</Form.Label>
+						<Form.Control className='mb-2' placeholder='1234 Main St' />
 
-						<Form.Group as={Col} xs={3}>
-							<Form.Label>Address</Form.Label>
-							<Form.Control placeholder='1234 Main St' />
-						</Form.Group>
+						<Form.Label>State</Form.Label>
+						<Form.Control as='select' defaultValue='Choose...'>
+							<option>Choose...</option>
+							<option>...</option>
+						</Form.Control>
 
-						<Form.Group as={Col} xs={3}>
-							<Form.Label>Address 2</Form.Label>
-							<Form.Control placeholder='Apartment, studio, or floor' />
-						</Form.Group>
-
-						{/* <Form.Row>
-					</Form.Row> */}
-						<Form.Group as={Col} xs={3}>
-							<Form.Label>City</Form.Label>
-							<Form.Control />
-						</Form.Group>
-
-						<Form.Group as={Col} xs={3}>
-							<Form.Label>State</Form.Label>
-							<Form.Control as='select' defaultValue='Choose...'>
-								<option>Choose...</option>
-								<option>...</option>
-							</Form.Control>
-						</Form.Group>
-
-						<Form.Group as={Col} xs={3}>
-							<Form.Label>Zip</Form.Label>
-							<Form.Control />
-						</Form.Group>
-
-						<Form.Group as={Col} xs={3}>
-							<Form.Check type='checkbox' label='Check me out' />
-						</Form.Group>
-
-						<Button variant='primary' type='submit'>
+						<Form.Check type='checkbox' label='Check me out' /> */}
+					<Row className='justify-content-center ml-4 mr-4'>
+						<Button variant='success' type='submit' size='lg' block>
 							Submit
 						</Button>
-					</Form>
-				</Container>
-			</div>
+					</Row>
+					{/* <Form.Row>
+					</Form.Row> */}
+				</Form>
+			</Jumbotron>
+
 			<footer className={styles.footer}>
 				<p> Made with 🤍 by MD-AD </p>
 			</footer>

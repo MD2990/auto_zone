@@ -31,8 +31,8 @@
 	height: 10%;
 	text-align: center;
 }
-.center_main_div {
-	border: 1px solid blue;
-	margin: 0 auto;
-	width: 25%; /* value of your choice which suits your alignment */
+.label_text {
+	font-weight: bold;
+	font-size: 1.2rem;
+	margin-right: 1px;
 }
