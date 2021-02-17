@@ -1,25 +1,19 @@
 import mongoose from 'mongoose';
 const DB = process.env.DB;
-let isConnected = false;
 
 export async function dbConnect() {
-	if (!isConnected) {
-		console.log(`Connecting to ${DB} ... `);
-		await mongoose
-			.connect(DB, {
-				useNewUrlParser: true,
-				useCreateIndex: true,
-				useFindAndModify: true,
-				useCreateIndex: true,
-				useUnifiedTopology: true,
-				useFindAndModify: false,
-			})
-			.then(() => {
-				isConnected = true;
-				console.log('MongoDB Connected');
-			})
-			.catch((err) => console.log(err));
+	// check if we have a connection to the database or if it's currently
+	// connecting or disconnecting (readyState 1, 2 and 3)
+	if (mongoose.connection.readyState >= 1) {
+		return;
 	}
+
+	return mongoose.connect(DB, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false,
+		useCreateIndex: true,
+	});
 }
 
 export function jsonify(obj) {

@@ -2,14 +2,14 @@ import mongoose, { Schema } from 'mongoose';
 
 const MODEL_NAME = 'Car';
 const schema = new Schema({
-	car_name: {
+	name: {
 		type: String,
 		required: [true, 'Please add a name'],
 		maxlength: [40, 'Name cannot be more than 40 characters'],
 	},
-	car_model: {
+	make: {
 		type: String,
-		required: true,
+		
 		maxlength: [200, 'Car model cannot be more than 200 characters'],
 	},
 });
