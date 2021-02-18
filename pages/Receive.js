@@ -1,29 +1,31 @@
-import { dbConnect, jsonify } from '../utils/dbConnect';
-import Car from '../models/Car';
+function Blog({ posts }) {
+	return (
+		<>
+			<div>
+				<ul>
+					{posts.data.map((car) => {
+						return (
+							<li key={car._id}>
+								Car: {car.name} / Model: {car.make}
+								<hr></hr>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
+		</>
+	);
+}
 
-export async function getServerSideProps(context) {
-	dbConnect();
-	const cars = await Car.find({}).exec();
+export async function getStaticProps() {
+	const res = await fetch('http://localhost:3000/api/cars/');
+	const posts = await res.json();
+
 	return {
 		props: {
-			cars: jsonify(cars),
+			posts,
 		},
 	};
 }
 
-export default function AllCars({ cars }) {
-	return (
-		<div>
-			<ul>
-				{cars.map((cars) => {
-					return (
-						<li key={cars._id}>
-							{cars.name}
-							{cars.make}
-						</li>
-					);
-				})}
-			</ul>
-		</div>
-	);
-}
+export default Blog;
