@@ -1,4 +1,4 @@
-import useSWR, { mutate } from 'swr';
+import useSWR, { mutate, trigger } from 'swr';
 import styles from '../styles/formik.module.css';
 import React from 'react';
 import { Formik } from 'formik';
@@ -6,8 +6,10 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 //const fetcher = (...args) => fetch(...args).then((res) => res.json());
-function Profile() {
-	const { data, error } = useSWR('http://localhost:3000/api/cars');
+function Profile({ cars }) {
+	const { data, error } = useSWR('http://localhost:3000/api/cars', {
+		initialData: cars,
+	});
 
 	if (error) return <div>failed to load</div>;
 	if (!data) return <div>loading...</div>;
@@ -23,6 +25,7 @@ function Profile() {
 					mutate('http://localhost:3000/api/cars', [...[data], values], false);
 					//formikHelpers.resetForm();
 					await axios.post('http://localhost:3000/api/cars', values);
+					trigger('http://localhost:3000/api/cars');
 				}}
 				validationSchema={Yup.object().shape({
 					//make: Yup.string().make().required('Email is required'),
@@ -104,6 +107,12 @@ function Profile() {
 		</div>
 	);
 }
+
+Profile.getInitialProps = async (ctx) => {
+	const res = await axios('http://localhost:3000/api/cars');
+	const json = res.data;
+	return { cars: json };
+};
 
 export default Profile;
 

@@ -10,17 +10,17 @@ const fetcher = (url) =>
 const EditCar = () => {
 	const router = useRouter();
 	const { id } = router.query;
-	const { data: car, error } = useSWR(id ? `/api/cars/${id}` : null, fetcher);
+	const { data, error } = useSWR(`/api/cars/${id}`, fetcher);
 
 	if (error) return <p>Failed to load</p>;
-	if (!car) return <p>Loading...</p>;
+	if (!data) return <p>Loading...</p>;
 
 	const carForm = {
-		name: car.name,
-		make: car.make,
+		name: data.name,
+		make: data.make,
 	};
 
-	return <Form formId='edit-pet-form' petForm={carForm} forNewPet={false} />;
+	return <Form  petForm={carForm}  />;
 };
 
 export default EditCar;

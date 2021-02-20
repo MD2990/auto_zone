@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { mutate } from 'swr';
+import axios from 'axios';
+import { jsonify } from '../utils/dbConnect';
 
-const Form = ({ formId, petForm, forNewPet = true }) => {
+const Form = ({ petForm }) => {
 	const router = useRouter();
 	const contentType = 'application/json';
-	const [errors, setErrors] = useState({});
-	const [message, setMessage] = useState('');
 
 	const [form, setForm] = useState({
 		name: petForm.name,
@@ -35,39 +35,15 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
 			const { data } = await res.json();
 
 			mutate(`/api/cars/${id}`, data, false); // Update the local data without a revalidation
-			router.push('/');
+			router.push('http://localhost:3000/edit');
 		} catch (error) {
-			setMessage('Failed to update pet');
-		}
-	};
-
-	/* The POST method adds a new entry in the mongodb database. */
-	const postData = async (form) => {
-		try {
-			const res = await fetch('/api/cars', {
-				method: 'POST',
-				headers: {
-					Accept: contentType,
-					'Content-Type': contentType,
-				},
-				body: JSON.stringify(form),
-			});
-
-			// Throw error with status code in case Fetch API req failed
-			if (!res.ok) {
-				throw new Error(res.status);
-			}
-
-			router.push('/');
-		} catch (error) {
-			setMessage('Failed to add pet');
+			setMessage('Failed to update car');
 		}
 	};
 
 	const handleChange = (e) => {
 		const target = e.target;
-		const value =
-			target.name === 'poddy_trained' ? target.checked : target.value;
+		const value = target.value;
 		const name = target.name;
 		const make = target.make;
 
@@ -80,26 +56,12 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const errs = formValidate();
-		if (Object.keys(errs).length === 0) {
-			forNewPet ? postData(form) : putData(form);
-		} else {
-			setErrors({ errs });
-		}
-	};
-
-	/* Makes sure pet info is filled for pet name, owner name, species, and image url*/
-	const formValidate = () => {
-		let err = {};
-		if (!form.name) err.name = 'Name is required';
-		if (!form.make) err.make = 'Make is required';
-
-		return err;
+		putData(form);
 	};
 
 	return (
 		<>
-			<form id={formId} onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<label htmlFor='name'>Name</label>
 				<input
 					type='text'
@@ -122,12 +84,6 @@ const Form = ({ formId, petForm, forNewPet = true }) => {
 
 				<button type='submit'>Submit</button>
 			</form>
-			<p>{message}</p>
-			<div>
-				{Object.keys(errors).map((err, index) => (
-					<li key={index}>{err}</li>
-				))}
-			</div>
 		</>
 	);
 };

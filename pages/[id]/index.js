@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { dbConnect, jsonify } from '../../utils/dbConnect';
 import Car from '../../models/Car';
+import axios from 'axios';
+import useSWR, { mutate, trigger } from 'swr';
 
 /* Allows you to view car card info and delete car card*/
 /* const CarPage = ({ car }) => {
@@ -69,11 +71,22 @@ export async function getServerSideProps(context) {
 export default function AllCars({ cars }) {
 	const router = useRouter();
 
-	const handleDelete = async (car) => {
-		try {
+	const handleDelete = async (carID) => {
+		const url = `http://localhost:3000/edit`;
+		const deleteUrl = `http://localhost:3000/api/cars/${carID}`;
+
+		mutate(
+			url,
+			cars.filter((c) => c._id === cars._id),
+			false
+		);
+
+		await axios.delete(deleteUrl);
+		trigger(url);
+		router.push(url);
+		/* try {
 			//car = cars.map((car) => car._id);
 
-			console.log(car);
 			await fetch(`/api/cars/${car}`, {
 				method: 'DELETE',
 			});
@@ -81,21 +94,20 @@ export default function AllCars({ cars }) {
 		} catch (error) {
 			//setMessage('Failed to delete the car.');
 			alert(error);
-		}
+		} */
 	};
 	return (
 		<div>
-			{cars.map((cars) => {
+			{cars.map((car) => {
 				return (
-					<div key={cars._id}>
-						{cars.name}
-						{/* 						{cars.make}
-						 */}
+					<div key={car._id}>
+						{car.name}
+
 						<div>
-							<Link href='/[id]/edit' as={`/${cars._id}/edit`}>
+							<Link href='/[id]/edit' as={`/${car._id}/edit`}>
 								<button>Edit</button>
 							</Link>
-							<button onClick={() => handleDelete(cars._id)}>Delete</button>
+							<button onClick={() => handleDelete(car._id)}>Delete</button>
 						</div>
 					</div>
 				);
