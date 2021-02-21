@@ -23,7 +23,7 @@ function Profile({ cars }) {
 					/* 		await new Promise((resolve) => setTimeout(resolve, 500));
 					alert(JSON.stringify(values, null, 2)); */
 					mutate('http://localhost:3000/api/cars', [...[data], values], false);
-					//formikHelpers.resetForm();
+					//	;
 					await axios.post('http://localhost:3000/api/cars', values);
 					trigger('http://localhost:3000/api/cars');
 				}}
