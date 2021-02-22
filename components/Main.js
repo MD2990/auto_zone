@@ -21,7 +21,9 @@ export default function AlertDismissible() {
 						<Link href='/Receive'>
 							<a style={{ textDecoration: 'none' }}>
 								<IoCarSportSharp size='5x' color='C70039' />
-								<h3 className={styles.link_fonts}>Receive a Car</h3>
+								<h3 className={`${styles.link_fonts} text-truncate`}>
+									Receive a Car
+								</h3>
 							</a>
 						</Link>
 					</Col>
@@ -29,7 +31,9 @@ export default function AlertDismissible() {
 						<Link href='/Rent'>
 							<a style={{ textDecoration: 'none' }}>
 								<IoCarSportOutline size='5x' color='C70039' />
-								<h3 className={styles.link_fonts}>Rent a Car</h3>
+								<h3 className={`${styles.link_fonts} text-truncate`}>
+									Rent a Car
+								</h3>
 							</a>
 						</Link>
 					</Col>
@@ -37,7 +41,7 @@ export default function AlertDismissible() {
 						<Link href='/Manage'>
 							<a style={{ textDecoration: 'none' }}>
 								<FcEditImage size='5x' color='C70039' />
-								<h5 className={styles.link_fonts}>Manage </h5>
+								<h3 className={`${styles.link_fonts} text-truncate`}>Manage</h3>
 							</a>
 						</Link>
 					</Col>

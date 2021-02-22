@@ -264,7 +264,7 @@ export default function ss() {
 									lg={6}
 									className=' justify-content-center align-items-center mb-4'>
 									<Col xm='true' sm='4'>
-										<Form.Label htmlFor='rental_fees'>
+										<Form.Label htmlFor='rental_fees' className='text-truncate'>
 											<span className='text-danger'> *</span> Rental Fees
 										</Form.Label>
 										<Form.Control
@@ -339,6 +339,9 @@ export default function ss() {
 					}}
 				</Formik>
 			</Jumbotron>
+			<footer className={styles.footer}>
+				<p> Made with 🤍 by MD-AD </p>
+			</footer>
 		</>
 	);
 }
