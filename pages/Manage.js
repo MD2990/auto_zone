@@ -1,3 +1,20 @@
+import React from 'react';
+import {
+	MDBContainer,
+	MDBCard,
+	MDBCardBody,
+	MDBRow,
+	MDBCol,
+	MDBBtn,
+	MDBIcon,
+	MDBInput,
+} from 'mdbreact';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+import axios from 'axios';
+import { Input } from '@material-ui/core';
+
 /* import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/main.module.css';
@@ -366,187 +383,287 @@ export default function ss() {
 */
 /*
 
-export function Manage() {
-	const [startDate, setStartDate] = useState(new Date());
-	function clicked() {
-		toast('hello', {
-			role: 'alert',
-		});
-	}
-
-	return (
-		<>
-			<Link href='/'>
-				<Button variant='primary' className='m-4  font-weight-bolder btn-lg'>
-					Home
-				</Button>
-			</Link>
-
-			<Jumbotron>
-				<Form>
-					<Row className=' justify-content-center align-items-center mb-4'>
-						{' '}
-						<Col xm='true' sm='4'>
-							{' '}
-							<Form.Label className={styles.label_text}> Make</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-						<Col xm='true' sm='4'>
-							{' '}
-							<Form.Label className={styles.label_text}>Model</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-					</Row>
-					<Row
-						xs={2}
-						md={4}
-						lg={6}
-						className=' justify-content-center align-items-center mb-4'>
-						{' '}
-						<Col xm='true' sm='4'>
-							<Form.Label className={styles.label_text}>Year</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-						<Col xm='true' sm='4'>
-							<Form.Label className={styles.label_text}>VIN</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-					</Row>
-					<Row
-						xs={2}
-						md={4}
-						lg={6}
-						className=' justify-content-center align-items-center mb-4'>
-						<Col xm='true' sm='4'>
-							<Form.Label className={styles.label_text}>Color</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-						<Col xm='true' sm='4'>
-							<Form.Label className={styles.label_text}>Mileage</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-					</Row>
-					<Row
-						xs={2}
-						md={4}
-						lg={6}
-						className=' justify-content-center align-items-center mb-4'>
-						<Col xm='true' sm='4'>
-							<Form.Label className={styles.label_text}>
-								Rental Fees{' '}
-							</Form.Label>
-							<Form.Control size='lg' placeholder='---' />
-						</Col>
-						<Col xm='true' sm='4'>
-							<Form.Label className={styles.label_text}>
-								Registration Expiry Date
-							</Form.Label>
-
-							<Form.Control
-								type='date'
-								className='form-control'
-								size='lg'
-								placeholder='---'
-								onChange={(e) => {
-									console.log(e.target.value);
-								}}
-							/>
-						</Col>
-					</Row>
-					{/* 
-						
-	
-						<Form.Label>State</Form.Label>
-						<Form.Control as='select' defaultValue='Choose...'>
-							<option>Choose...</option>
-							<option>...</option>
-						</Form.Control>
-
-						<Form.Check type='checkbox' label='Check me out' /> }
-						<Row
-						md={6}
-						className='justify-content-center align-items-center ml-6 mr-11'>
-						<Toasts></Toasts>
-					</Row>
-				</Form>
-			</Jumbotron>
-
-			<footer className={styles.footer}>
-				<p> Made with 🤍 by MD-AD </p>
-			</footer>
-		</>
-	);
-}
 
 
 
 */
-import React from 'react';
-import {
-	MDBContainer,
-	MDBRow,
-	MDBCol,
-	MDBBtn,
-	MDBIcon,
-	MDBInput,
-} from 'mdbreact';
 
-const FormPage = () => {
+export default function FormPage() {
+	let t = 'text';
 	return (
-		<MDBContainer>
-			<MDBRow>
-				<form>
-					<p className='h5 text-center mb-4'>Write to us</p>
+		<>
+			<MDBContainer>
+				<p className='h1 font-font-weight-bold text-center mb-4 mt-4'>
+					Add New Vehicle
+				</p>
+				<Formik
+					initialValues={{
+						make: '',
+						model: '',
+						year: '',
+						vin: '',
+						color: '',
+						mileage: '',
+						rental_fees: '',
+						registration_expiry_date: '',
+						available: true,
+						notes: '',
+					}}
+					onSubmit={async (values) => {
+						/* await new Promise((resolve) => setTimeout(resolve, 500));
+						alert(JSON.stringify(values, null, 2));
+						console.log(values);
+						mutate(
+							'http://localhost:3000/api/cars',
+							[...[data], values],
+							false
+						);
+						await axios.post('http://localhost:3000/api/cars', values);
+						trigger('http://localhost:3000/api/cars'); */
 
-					<MDBCol md={6}
-						<div 	 className='grey-text'>
-						<MDBInput
-							label='Your name'
-							icon='user'
-							group
-							type='text'
-							validate
-							error='wrong'
-							success='right'
-						/>
+						//alert(JSON.stringify(values, null, 2));
+						console.log(values);
+					}}
+					validationSchema={Yup.object().shape({
+						make: Yup.string().trim().required('Make is required'),
 
-						</div>
-						<MDBInput
-							label='Your email'
-							icon='envelope'
-							group
-							type='email'
-							validate
-							error='wrong'
-							success='right'
-						/>
-						<MDBInput
-							label='Subject'
-							icon='tag'
-							group
-							type='text'
-							validate
-							error='wrong'
-							success='right'
-						/>
-						<MDBInput
-							type='textarea'
-							rows='2'
-							label='Your message'
-							icon='pencil-alt'
-						/>
-				
+						model: Yup.string().trim().required('Model is required'),
+						vin: Yup.string().trim().min(5).required('VIN number is required'),
+						year: Yup.date()
+							.typeError('Please enter a valid ')
+							.required('Year is required'),
+						color: Yup.string().trim().required('Color is required'),
+						mileage: Yup.number()
+							.typeError('Rental Fees must be a number')
+							.min(1, 'Min value 1.')
+							.required('Mileage is required'),
+						registration_expiry_date: Yup.string()
+							.trim()
+							.min(2)
+							.required('Reg Exp Date is required'),
+						rental_fees: Yup.number()
+							.typeError('Rental Fees must be a number')
+							.min(1, 'Min value 1.')
+							.required('Rental Fees is required'),
+						/* .max(30, 'Max value 30.') */
+					})}>
+					{(props) => {
+						const {
+							values,
+							touched,
+							errors,
+							dirty,
+							isSubmitting,
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							handleReset,
+						} = props;
 
-					<div className='text-center'>
-						<MDBBtn outline color='secondary'>
-							Send
-							<MDBIcon far icon='paper-plane' className='ml-1' />
-						</MDBBtn>
-					</div>
-				</form>
-			</MDBRow>
-		</MDBContainer>
+						return (
+							<form onSubmit={handleSubmit}>
+								<MDBRow className=' justify-content-center  '>
+									<MDBCol md='8'>
+										<MDBCard>
+											<MDBCardBody className='mx-4'>
+												<MDBRow>
+													<MDBCol md='6'>
+														<div className='grey-text'>
+															<MDBInput
+																label='Make'
+																icon='user'
+																type='text'
+																name='make'
+																id='make'
+																value={values.make}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.make && touched.make && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.make}
+																</MDBRow>
+															)}
+															<MDBInput
+																label='Model'
+																icon='user'
+																type='text'
+																name='model'
+																id='model'
+																value={values.model}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.model && touched.model && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.model}
+																</MDBRow>
+															)}
+
+															<MDBInput
+																label='Year'
+																icon='user'
+																type='text'
+																name='year'
+																id='year'
+																value={values.year}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.year && touched.year && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.year}
+																</MDBRow>
+															)}
+															<MDBInput
+																label='Vin'
+																icon='user'
+																type='text'
+																name='vin'
+																id='vin'
+																value={values.vin}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.vin && touched.vin && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.vin}
+																</MDBRow>
+															)}
+															<div className='custom-control custom-switch'>
+																<input
+																	type='checkbox'
+																	className='custom-control-input'
+																	id='available'
+																	checked={values.available}
+																	onChange={handleChange}
+																	readOnly
+																/>
+																<label
+																	className='custom-control-label'
+																	htmlFor='available'>
+																	Toggle this switch element
+																</label>
+															</div>
+														</div>
+													</MDBCol>
+
+													<MDBCol md='6'>
+														<div className='grey-text'>
+															<MDBInput
+																label='Color'
+																icon='user'
+																type='text'
+																name='color'
+																id='color'
+																value={values.color}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.color && touched.color && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.color}
+																</MDBRow>
+															)}
+															<MDBInput
+																label='Mileage'
+																icon='user'
+																type='text'
+																name='mileage'
+																id='mileage'
+																value={values.mileage}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.mileage && touched.mileage && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.mileage}
+																</MDBRow>
+															)}
+															<MDBInput
+																label='Rental Fees'
+																icon='user'
+																type='text'
+																name='rental_fees'
+																id='rental_fees'
+																value={values.rental_fees}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.rental_fees && touched.rental_fees && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.rental_fees}
+																</MDBRow>
+															)}
+															<MDBInput
+																className='text-right font-small'
+																type='date'
+																label='Reg Exp Date'
+																icon='user'
+																name='registration_expiry_date'
+																id='registration_expiry_date'
+																value={values.registration_expiry_date}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.registration_expiry_date &&
+																touched.registration_expiry_date && (
+																	<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																		{errors.registration_expiry_date}
+																	</MDBRow>
+																)}
+
+															<MDBInput
+																type='textarea'
+																rows='2'
+																label='Remarks'
+																icon='pencil-alt'
+																name='remarks'
+																id='remarks'
+																value={values.remarks}
+																onChange={handleChange}
+																onBlur={handleBlur}
+															/>
+															{errors.remarks && touched.remarks && (
+																<MDBRow className=' justify-content-start align-items-left text-left ml-3 text-danger'>
+																	{errors.remarks}
+																</MDBRow>
+															)}
+														</div>
+													</MDBCol>
+												</MDBRow>
+											</MDBCardBody>
+										</MDBCard>
+										<MDBRow className='justify-content-center text-center'>
+											<MDBBtn
+												outline
+												color='secondary'
+												type='button'
+												onClick={handleReset}
+												disabled={!dirty || isSubmitting}>
+												Reset
+												<MDBIcon far icon='paper-plane' className='ml-1' />
+											</MDBBtn>
+
+											<MDBBtn
+												outline
+												color='secondary'
+												type='submit'
+												disabled={isSubmitting}>
+												Submit
+												<MDBIcon far icon='paper-plane' className='ml-1' />
+											</MDBBtn>
+										</MDBRow>
+									</MDBCol>
+								</MDBRow>
+							</form>
+						);
+					}}
+				</Formik>
+			</MDBContainer>
+			);
+		</>
 	);
-};
+}
 
-export default FormPage;
+//export default FormPage;
