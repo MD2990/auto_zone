@@ -1,4 +1,4 @@
-import Link from 'next/link';
+/* import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/main.module.css';
 import Col from 'react-bootstrap/Col';
@@ -6,7 +6,14 @@ import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from 'react-toastify';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, InputGroup, FormControl } from 'react-bootstrap';
+import {
+	Container,
+	Row,
+	InputGroup,
+	FormControl,
+	ToggleButtonGroup,
+	ToggleButton,
+} from 'react-bootstrap';
 import { useState } from 'react';
 import { FcEditImage } from 'react-icons/fc';
 import useSWR, { mutate, trigger } from 'swr';
@@ -20,9 +27,9 @@ export default function ss() {
 			<Jumbotron>
 				<Container>
 					<Row
-						/* 	xs={4}
+							xs={4}
 					md={2}
-					lg={16} */
+					lg={16} 
 						className=' justify-content-center align-items-center mb-4'>
 						<Col
 							md='auto'
@@ -43,18 +50,21 @@ export default function ss() {
 						mileage: '',
 						rental_fees: '',
 						registration_expiry_date: '',
+						available: true,
+						notes: '',
 					}}
 					onSubmit={async (values) => {
-						/* 		await new Promise((resolve) => setTimeout(resolve, 500));
-					alert(JSON.stringify(values, null, 2)); */
-						mutate(
+						 		await new Promise((resolve) => setTimeout(resolve, 500));
+					alert(JSON.stringify(values, null, 2)); 
+						console.log(values);
+						 mutate(
 							'http://localhost:3000/api/cars',
 							[...[data], values],
 							false
 						);
-						//	;
+							;
 						await axios.post('http://localhost:3000/api/cars', values);
-						trigger('http://localhost:3000/api/cars');
+						trigger('http://localhost:3000/api/cars'); 
 					}}
 					validationSchema={Yup.object().shape({
 						//make: Yup.string().make().required('Email is required'),
@@ -105,12 +115,7 @@ export default function ss() {
 											value={values.make}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.make && touched.make
-													? styles.input + styles.error
-													: styles.input
-											}
-										/>{' '}
+										/>
 										{errors.make && touched.make && (
 											<Row
 												xs={2}
@@ -134,11 +139,6 @@ export default function ss() {
 											value={values.model}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.model && touched.model
-													? styles.input + styles.error
-													: styles.input
-											}
 										/>
 										{errors.model && touched.model && (
 											<Row className=' justify-content-start align-items-left text-left ml-3 text-danger'>
@@ -164,12 +164,7 @@ export default function ss() {
 											value={values.vin}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.vin && touched.vin
-													? styles.input + styles.error
-													: styles.input
-											}
-										/>{' '}
+										/>
 										{errors.vin && touched.vin && (
 											<Row className=' justify-content-start align-items-left text-left ml-3 text-danger'>
 												{errors.vin}
@@ -189,11 +184,6 @@ export default function ss() {
 											value={values.year}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.year && touched.year
-													? styles.input + styles.error
-													: styles.input
-											}
 										/>
 										{errors.year && touched.year && (
 											<Row className=' justify-content-start align-items-left text-left ml-3 text-danger'>
@@ -220,12 +210,7 @@ export default function ss() {
 											value={values.mileage}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.mileage && touched.mileage
-													? styles.input + styles.error
-													: styles.input
-											}
-										/>{' '}
+										/>
 										{errors.mileage && touched.mileage && (
 											<Row className=' justify-content-start align-items-left text-left ml-3 text-danger'>
 												{errors.mileage}
@@ -245,11 +230,6 @@ export default function ss() {
 											value={values.color}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.color && touched.color
-													? styles.input + styles.error
-													: styles.input
-											}
 										/>
 										{errors.color && touched.color && (
 											<Row className=' justify-content-start align-items-left text-left ml-3 text-danger'>
@@ -258,6 +238,7 @@ export default function ss() {
 										)}
 									</Col>
 								</Row>
+
 								<Row
 									xs={2}
 									md={4}
@@ -275,12 +256,13 @@ export default function ss() {
 											value={values.rental_fees}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
+
+											 	className={
 												errors.rental_fees && touched.rental_fees
 													? styles.input + styles.error
 													: styles.input
-											}
-										/>{' '}
+											} 
+										/>
 										{errors.rental_fees && touched.rental_fees && (
 											<Row className=' justify-content-start align-items-left text-left ml-3 text-danger'>
 												{errors.rental_fees}
@@ -303,12 +285,6 @@ export default function ss() {
 											value={values.registration_expiry_date}
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className={
-												errors.registration_expiry_date &&
-												touched.registration_expiry_date
-													? styles.input + styles.error
-													: styles.input
-											}
 										/>
 										{errors.registration_expiry_date &&
 											touched.registration_expiry_date && (
@@ -317,6 +293,48 @@ export default function ss() {
 												</Row>
 											)}
 									</Col>
+								</Row>
+
+								<Row
+									xs={2}
+									md={4}
+									lg={6}
+									className=' justify-content-center align-content-start mb-4'>
+									<Col xm='true' sm='4'>
+										<Form.Label htmlFor='notes'>
+											<span className='text-danger'> *</span> Mileage
+										</Form.Label>
+
+										<Form.Control
+											size='lg'
+											placeholder='notes'
+											id='notes'
+											type='textarea'
+											value={values.notes}
+											onChange={handleChange}
+											onBlur={handleBlur}
+										/>
+									</Col>
+									<Col md='auto' className='border'></Col>
+								</Row>
+
+								<Row
+									xs={2}
+									md={4}
+									lg={6}
+									className=' justify-content-center align-items-center mb-4'>
+									<Col xm='true' sm='4' className='text-wrap'>
+										<Form.Check
+											type='switch'
+											id='available'
+											name='available'
+											label='Immediately available'
+											onChange={handleChange}
+											onBlur={handleBlur}
+											checked={values.available}
+										/>
+									</Col>
+									<Col xm='true' sm='4'></Col>
 								</Row>
 								<Row className=' justify-content-center align-items-center text-center'>
 									<button
@@ -344,8 +362,8 @@ export default function ss() {
 			</footer>
 		</>
 	);
-}
-
+} 
+*/
 /*
 
 export function Manage() {
@@ -463,3 +481,72 @@ export function Manage() {
 
 
 */
+import React from 'react';
+import {
+	MDBContainer,
+	MDBRow,
+	MDBCol,
+	MDBBtn,
+	MDBIcon,
+	MDBInput,
+} from 'mdbreact';
+
+const FormPage = () => {
+	return (
+		<MDBContainer>
+			<MDBRow>
+				<form>
+					<p className='h5 text-center mb-4'>Write to us</p>
+
+					<MDBCol md={6}
+						<div 	 className='grey-text'>
+						<MDBInput
+							label='Your name'
+							icon='user'
+							group
+							type='text'
+							validate
+							error='wrong'
+							success='right'
+						/>
+
+						</div>
+						<MDBInput
+							label='Your email'
+							icon='envelope'
+							group
+							type='email'
+							validate
+							error='wrong'
+							success='right'
+						/>
+						<MDBInput
+							label='Subject'
+							icon='tag'
+							group
+							type='text'
+							validate
+							error='wrong'
+							success='right'
+						/>
+						<MDBInput
+							type='textarea'
+							rows='2'
+							label='Your message'
+							icon='pencil-alt'
+						/>
+				
+
+					<div className='text-center'>
+						<MDBBtn outline color='secondary'>
+							Send
+							<MDBIcon far icon='paper-plane' className='ml-1' />
+						</MDBBtn>
+					</div>
+				</form>
+			</MDBRow>
+		</MDBContainer>
+	);
+};
+
+export default FormPage;
