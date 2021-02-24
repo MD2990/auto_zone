@@ -12,14 +12,14 @@ import {
 } from 'mdbreact';
 import { Formik } from 'formik';
 import moment from 'moment';
-
+import Toasts from '../components/Snack';
 import * as Yup from 'yup';
 
 import axios from 'axios';
 import { Input } from '@material-ui/core';
+import { toast } from 'react-toastify';
 
 export default function FormPage() {
-	let t = 'text';
 	return (
 		<>
 			<MDBContainer>
@@ -40,21 +40,46 @@ export default function FormPage() {
 						notes: '',
 					}}
 					onSubmit={async (values, { resetForm, setSubmitting }) => {
-						moment(values.registration_expiry_date).format('MMMM Do YYYY');
+						try {
+							//moment(values.registration_expiry_date).format('MMMM Do YYYY');
 
-						/* 	mutate(
+							/* 	mutate(
 							'http://localhost:3000/api/cars',
 							[ values],
 							false
 						); */
-						await axios.post('http://localhost:3000/api/cars', values);
-						//trigger('http://localhost:3000/api/cars');
-						setSubmitting(false);
-						resetForm();
+							await axios
+								.post('http://localhost:3000/api/cars', values)
+
+								.then(function (response) {
+									setSubmitting(false);
+									resetForm();
+
+									toast(`${response.data.data.model} added successfully`, {
+										type: toast.TYPE.SUCCESS,
+									});
+								})
+
+								.catch(function (error) {
+									toast(`${error.response.data}`, {
+										type: toast.TYPE.ERROR,
+										autoClose: 8000,
+									});
+								});
+
+							//trigger('http://localhost:3000/api/cars');
+						} catch (error) {
+							toast(
+								'Somthing went wrong please check the car details and try again',
+								{
+									type: toast.TYPE.ERROR,
+									autoClose: 8000,
+								}
+							);
+						}
 					}}
 					validationSchema={Yup.object().shape({
 						make: Yup.string().trim().required('Make is required'),
-
 						model: Yup.string().trim().required('Model is required'),
 						vin: Yup.string().trim().min(5).required('VIN number is required'),
 						year: Yup.date()
@@ -346,5 +371,3 @@ export default function FormPage() {
 		</>
 	);
 }
-
-//export default FormPage;

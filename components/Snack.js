@@ -6,27 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Display a maximum of 3 notifications at the same time
 export default function Toasts() {
-	const notify = (e) => {
-		e.preventDefault();
+	const notify = () => {
 		toast('lorem ipsum');
 	};
 
-	return (
-		<div>
-			<button className='btn btn-lg btn-success' onClick={notify}>
-				Submit
-			</button>
-			<ToastContainer limit={1}></ToastContainer>
-		</div>
-	);
+	return () => notify();
 }
-
-
-
-
-
-
-
-
-
-

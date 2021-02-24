@@ -18,11 +18,10 @@ export default async function handler(req, res) {
 		case 'POST':
 			try {
 				const car = await Car.create(req.body);
-				car.validateSync();
 				/* create a new model in the database */
 				res.status(201).json({ success: true, data: car });
 			} catch (error) {
-				res.status(400).json({ success: false });
+				res.status(400).json(error.message);
 			}
 			break;
 		default:
