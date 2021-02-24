@@ -17,9 +17,9 @@ export default async function handler(req, res) {
 			break;
 		case 'POST':
 			try {
-				const car = await Car.create(
-					req.body
-				); /* create a new model in the database */
+				const car = await Car.create(req.body);
+				car.validateSync();
+				/* create a new model in the database */
 				res.status(201).json({ success: true, data: car });
 			} catch (error) {
 				res.status(400).json({ success: false });
