@@ -34,8 +34,6 @@ const schema = new Schema({
 	},
 	registration_expiry_date: {
 		type: Date,
-		min: '2021-02-20',
-		max: '2021-02-26',
 		required: [true, 'Please add a Registration Expiry Date'],
 	},
 	available: {
