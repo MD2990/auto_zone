@@ -11,12 +11,8 @@ import {
 	Typography,
 } from 'mdbreact';
 import { Formik } from 'formik';
-import moment from 'moment';
-import Toasts from '../components/Snack';
 import * as Yup from 'yup';
-
 import axios from 'axios';
-import { Input } from '@material-ui/core';
 import { toast } from 'react-toastify';
 
 export default function FormPage() {

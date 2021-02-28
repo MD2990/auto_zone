@@ -6,22 +6,19 @@ import paginationFactory, {
 import { Type } from 'react-bootstrap-table2-editor';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import axios from 'axios';
-import { array } from 'yup';
 import useSWR, { mutate } from 'swr';
 import ToolkitProvider, {
 	Search,
 	CSVExport,
 } from 'react-bootstrap-table2-toolkit';
+import React from 'react';
 
 export default function View({ cars }) {
 	const { SearchBar, ClearSearchButton } = Search;
 	const { ExportCSVButton } = CSVExport;
 	const router = useRouter();
-	const [isOpen, setIsOpen] = React.useState(false);
-
 	const { data, error } = useSWR('http://localhost:3000/api/cars', {
 		initialData: cars,
 	});
@@ -32,7 +29,7 @@ export default function View({ cars }) {
 	mutate('http://localhost:3000/api/cars', data, false);
 	function priceFormatter(column, colIndex) {
 		return (
-			<a className='navbar-brand' href='#'>
+			<a className='navbar-item text-truncate' href='#'>
 				{column}
 			</a>
 		);
@@ -101,29 +98,27 @@ export default function View({ cars }) {
 			dataField: 'notes',
 			text: 'Notes',
 			sort: true,
+			width: 150,
 			formatter: priceFormatter,
 		},
 	];
-
+	const rowStyle = (row, rowIndex) => {
+		return rowIndex;
+	};
 	const defaultSorted = [
 		{
 			dataField: 'model',
 			order: 'desc',
 		},
 	];
-	const selectRow = {
-		mode: 'radio',
-		clickToSelect: true,
-		onSelect: (row, isSelect, rowIndex, e) => {
+	const rowEvents = {
+		onClick: (e, row, rowIndex) => {
 			confirm('Do you want to edit/delete: ' + row.model)
 				? router.push(`http://localhost:3000/api/cars/${row._id}`)
 				: false;
 		},
 	};
 
-	let toggle = () => {
-		setModel(!modal);
-	};
 	const options = {
 		custom: true,
 		paginationSize: 4,
@@ -151,13 +146,18 @@ export default function View({ cars }) {
 						<BootstrapTable
 							{...toolkitprops.baseProps}
 							{...paginationTableProps}
+							striped
+							hover
+							condensed
 							bootstrap4
 							keyField='_id'
 							data={data}
+							//className='row-cols-xl-6'
+							rowClasses='row-cols-xl-2'
 							columns={columns}
 							defaultSorted={defaultSorted}
 							defaultSortDirection='asc'
-							selectRow={selectRow}
+							rowEvents={rowEvents}
 						/>
 						<ExportCSVButton {...toolkitprops.csvProps}>
 							Export CSV!!
@@ -171,21 +171,11 @@ export default function View({ cars }) {
 
 	return (
 		<>
-			<div>
+			<div className='container-xl mt-4 mb-4'>
 				<PaginationProvider pagination={paginationFactory(options)}>
 					{contentTable}
 				</PaginationProvider>
 			</div>
-
-			{/* 	<BootstrapTable
-				bootstrap4
-				keyField='_id'
-				data={data}
-				columns={columns}
-				pagination={paginationFactory()}
-				defaultSorted={defaultSorted}
-				defaultSortDirection='asc'
-			/> */}
 		</>
 	);
 }
