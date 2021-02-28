@@ -9,7 +9,7 @@ const Form = ({ petForm }) => {
 	const contentType = 'application/json';
 
 	const [form, setForm] = useState({
-		name: petForm.name,
+		model: petForm.model,
 		make: petForm.make,
 	});
 
@@ -34,8 +34,8 @@ const Form = ({ petForm }) => {
 
 			const { data } = await res.json();
 
-			mutate(`/api/cars/${id}`, data, false); // Update the local data without a revalidation
-			router.push('http://localhost:3000/edit');
+			mutate(`/api/cars/${id}`, data); // Update the local data without a revalidation
+			router.push('http://localhost:3000/View');
 		} catch (error) {
 			setMessage('Failed to update car');
 		}
@@ -62,12 +62,12 @@ const Form = ({ petForm }) => {
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
-				<label htmlFor='name'>Name</label>
+				<label htmlFor='model'>Name</label>
 				<input
 					type='text'
 					maxLength='20'
-					name='name'
-					value={form.name}
+					name='model'
+					value={form.model}
 					onChange={handleChange}
 					required
 				/>

@@ -14,24 +14,34 @@ import ToolkitProvider, {
 	CSVExport,
 } from 'react-bootstrap-table2-toolkit';
 import React from 'react';
+import Link from 'next/link';
 
 export default function View({ cars }) {
 	const { SearchBar, ClearSearchButton } = Search;
 	const { ExportCSVButton } = CSVExport;
 	const router = useRouter();
-	const { data, error } = useSWR('http://localhost:3000/api/cars', {
-		initialData: cars,
-	});
+	const { data, error } = useSWR('http://localhost:3000/api/cars');
 
 	if (error) return <div>failed to load</div>;
 	if (!data) return <div>Lodeing ...</div>;
 
+	const style = {
+		cursor: 'pointer',
+	};
+
 	mutate('http://localhost:3000/api/cars', data, false);
 	function priceFormatter(column, colIndex) {
 		return (
-			<a className='navbar-item text-truncate' href='#'>
+			<p className=' text-wrap text-uppercase  text-truncate' style={style}>
 				{column}
-			</a>
+			</p>
+
+			/* 	<Link href='#'>
+				<a>{column}</a>
+			</Link> */
+			/* 	<a className='navbar-item text-truncate' href='#'>
+				
+			</a> */
 		);
 	}
 	const columns = [
@@ -114,7 +124,7 @@ export default function View({ cars }) {
 	const rowEvents = {
 		onClick: (e, row, rowIndex) => {
 			confirm('Do you want to edit/delete: ' + row.model)
-				? router.push(`http://localhost:3000/api/cars/${row._id}`)
+				? router.push(`http://localhost:3000/${row._id}/edit`)
 				: false;
 		},
 	};

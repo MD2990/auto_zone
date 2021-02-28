@@ -101,8 +101,8 @@ export default function AllCars({ cars }) {
 			{cars.map((car) => {
 				return (
 					<div key={car._id}>
-						{car.name}
-
+						{car.model}*****
+						{car.make}
 						<div>
 							<Link href='/[id]/edit' as={`/${car._id}/edit`}>
 								<button>Edit</button>

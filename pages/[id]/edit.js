@@ -1,7 +1,8 @@
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import Form from '../../components/Form';
-
+const url = `http://localhost:3000/edit`;
 const fetcher = (url) =>
 	fetch(url)
 		.then((res) => res.json())
@@ -10,17 +11,20 @@ const fetcher = (url) =>
 const EditCar = () => {
 	const router = useRouter();
 	const { id } = router.query;
-	const { data, error } = useSWR(`/api/cars/${id}`, fetcher);
+	const { data, error } = useSWR(`/api/cars/${id}`);
 
 	if (error) return <p>Failed to load</p>;
 	if (!data) return <p>Loading...</p>;
 
+	console.log(data.model);
+	console.log(data.make);
+
 	const carForm = {
-		name: data.name,
+		model: data.model,
 		make: data.make,
 	};
 
-	return <Form  petForm={carForm}  />;
+	return <Form petForm={carForm} />;
 };
 
 export default EditCar;
