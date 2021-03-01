@@ -1,3 +1,4 @@
+/*
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -56,7 +57,7 @@ export async function getServerSideProps({ params }) {
 }
 
 export default CarPage;
- */
+ 
 
 export async function getServerSideProps(context) {
 	dbConnect();
@@ -94,7 +95,7 @@ export default function AllCars({ cars }) {
 		} catch (error) {
 			//setMessage('Failed to delete the car.');
 			alert(error);
-		} */
+		} 
 	};
 	return (
 		<div>
@@ -114,4 +115,8 @@ export default function AllCars({ cars }) {
 			})}
 		</div>
 	);
+}
+*/
+export default function AllCars() {
+	return <h1>hi</h1>;
 }

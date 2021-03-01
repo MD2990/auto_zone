@@ -15,6 +15,7 @@ import ToolkitProvider, {
 } from 'react-bootstrap-table2-toolkit';
 import React from 'react';
 import Link from 'next/link';
+import Form from '../components/Edit_Delete_Form';
 
 export default function View({ cars }) {
 	const { SearchBar, ClearSearchButton } = Search;
@@ -123,9 +124,15 @@ export default function View({ cars }) {
 	];
 	const rowEvents = {
 		onClick: (e, row, rowIndex) => {
-			confirm('Do you want to edit/delete: ' + row.model)
-				? router.push(`http://localhost:3000/${row._id}/edit`)
-				: false;
+			const carForm = {
+				model: row.model,
+				make: row.make,
+			};
+			///<Link href='/[id]/edit' as={`/${car._id}/edit`}></Link>
+
+			//return <Form petForm={carForm} />;
+			router.push(`http://localhost:3000/${row._id}/edit`);
+			
 		},
 	};
 
