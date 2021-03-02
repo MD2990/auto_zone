@@ -15,6 +15,7 @@ const EditCar = () => {
 	if (!data) return <p>Loading...</p>;
 
 	const carForm = {
+		id:data._id,
 		make: data.make,
 		model: data.model,
 		year: data.year,

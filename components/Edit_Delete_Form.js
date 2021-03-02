@@ -92,7 +92,7 @@ const Form = ({ petForm }) => {
 export default Form;
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	MDBContainer,
 	MDBCard,
@@ -103,22 +103,32 @@ import {
 	MDBIcon,
 	MDBInput,
 	Typography,
+	MDBModal,
+	MDBModalHeader,
+	MDBModalBody,
+	MDBModalFooter,
 } from 'mdbreact';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { mutate, trigger } from 'swr';
-
+import axios from 'axios';
+import 'lodash';
+import Example from '../pages/Model';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Edit_Delete_Form({ formData }) {
 	const router = useRouter();
 	const contentType = 'application/json';
-
+	const [show, setShow] = useState(false);
 	//The PUT method edits an existing entry in the mongodb database.
 	const putData = async (form) => {
 		const { id } = router.query;
 
 		try {
+			console.log('im putting');
 			const res = await fetch(`/api/cars/${id}`, {
 				method: 'PUT',
 				headers: {
@@ -141,6 +151,34 @@ export default function Edit_Delete_Form({ formData }) {
 		}
 	};
 
+	const handleDelete = async () => {
+		const url = `http://localhost:3000/View`;
+		const deleteUrl = `http://localhost:3000/api/cars/${formData.id}`;
+
+		await axios.delete(deleteUrl);
+		trigger(url);
+		router.push(url);
+	};
+
+	const handleShow = () => setShow(true);
+	const handleCancel = () => setShow(false);
+	//const handleDelete = () => setShow(false);
+
+	function showModal(show) {
+		console.log('im delete', show);
+
+		if (show)
+			return (
+				<Example
+					show={show}
+					handleCancel={handleCancel}
+					handleDelete={handleDelete}
+					car={formData.model}
+				/>
+			);
+		else return null;
+	}
+
 	return (
 		<>
 			<MDBContainer>
@@ -149,6 +187,7 @@ export default function Edit_Delete_Form({ formData }) {
 				</p>
 				<Formik
 					initialValues={{
+						id: formData.id,
 						make: formData.make,
 						model: formData.model,
 						year: formData.year,
@@ -161,30 +200,44 @@ export default function Edit_Delete_Form({ formData }) {
 						notes: formData.notes,
 					}}
 					onSubmit={async (values, { resetForm, setSubmitting }) => {
-						try {
-							await putData(values);
-							setSubmitting(false);
-							trigger('http://localhost:3000/api/cars');
+						if (!_.isEqual(formData, values)) {
+							try {
+								await putData(values);
+								setSubmitting(false);
+								trigger('http://localhost:3000/api/cars');
+								toast(
+									` ${values.model} Updated Successfully !!!`,
+
+									{
+										type: toast.TYPE.SUCCESS,
+										autoClose: 1500,
+									}
+								);
+								setTimeout(() => {
+									router.push('http://localhost:3000/View');
+								}, 1800);
+							} catch (error) {
+								toast(
+									'Somthing went wrong please check the car details and try again' +
+										error,
+									{
+										type: toast.TYPE.ERROR,
+										autoClose: 8000,
+									}
+								);
+							}
+						} else {
 							toast(
-								` ${values.model} Updated Successfully !!!`,
+								`No Changes ... `,
 
 								{
-									type: toast.TYPE.SUCCESS,
-									autoClose: 1500,
+									type: toast.TYPE.INFO,
+									autoClose: 1000,
 								}
 							);
 							setTimeout(() => {
 								router.push('http://localhost:3000/View');
-							}, 1800);
-						} catch (error) {
-							toast(
-								'Somthing went wrong please check the car details and try again' +
-									error,
-								{
-									type: toast.TYPE.ERROR,
-									autoClose: 8000,
-								}
-							);
+							}, 1200);
 						}
 					}}
 					validationSchema={Yup.object().shape({
@@ -462,16 +515,29 @@ export default function Edit_Delete_Form({ formData }) {
 											</MDBBtn>
 
 											<MDBBtn
+												className='text-capitalize'
 												outline
 												color='primary'
 												type='submit'
 												disabled={isSubmitting}>
-												Submit
+												Edit and Save
 												<MDBIcon icon='paper-plane' className='ml-1 ' />
+											</MDBBtn>
+
+											<MDBBtn
+												onClick={handleShow}
+												className='text-capitalize '
+												outline
+												color='danger'
+												type='button'
+												disabled={isSubmitting}>
+												delete
+												<MDBIcon icon='fas fa-trash ' className='ml-1 ' />
 											</MDBBtn>
 										</MDBRow>
 									</MDBCol>
 								</MDBRow>
+								{showModal(show)}
 							</form>
 						);
 					}}
