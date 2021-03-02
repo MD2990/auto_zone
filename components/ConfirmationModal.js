@@ -1,8 +1,5 @@
-import { useState } from 'react';
-
 import { Modal, Button } from 'react-bootstrap';
-
-export default function Example({ show, handleCancel,handleDelete, car }) {
+export default function Example({ show, handleCancel, handleDelete, car }) {
 	return (
 		<>
 			<Modal show={show} onHide={handleCancel}>
