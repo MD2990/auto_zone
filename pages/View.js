@@ -16,6 +16,7 @@ import ToolkitProvider, {
 import React from 'react';
 import Link from 'next/link';
 import Form from '../components/Edit_Delete_Form';
+import { toast } from 'react-toastify';
 
 export default function View({ cars }) {
 	const { SearchBar, ClearSearchButton } = Search;
@@ -23,8 +24,27 @@ export default function View({ cars }) {
 	const router = useRouter();
 	const { data, error } = useSWR('http://localhost:3000/api/cars');
 
-	if (error) return <div>failed to load</div>;
-	if (!data) return <div>Lodeing ...</div>;
+	if (error)
+		return (
+			<div className='d-flex justify-content-center text-center mt-xl-5 pt-xl-5 vh-100'>
+				<div className='ms-auto spinner-grow  text-danger ' role='status'>
+					<span className='visually-hidden'> </span>
+					<h6 className=' ml-xl-n5 pl-xl-n5 mt-xl-5  text-nowrap '>
+						Please try again !!!
+					</h6>
+				</div>
+			</div>
+		);
+
+	if (!data)
+		return (
+			<div className='d-flex justify-content-center text-center mt-xl-5 pt-xl-5 vh-100'>
+				<div className='ms-auto spinner-grow  text-primary ' role='status'>
+					<span className='visually-hidden'></span>
+					<h6 className=' ml-xl-n2 mt-xl-5  text-nowrap '>Loading ...</h6>
+				</div>
+			</div>
+		);
 
 	const style = {
 		cursor: 'pointer',
@@ -33,16 +53,9 @@ export default function View({ cars }) {
 	mutate('http://localhost:3000/api/cars', data, false);
 	function priceFormatter(column, colIndex) {
 		return (
-			<p className=' text-wrap text-uppercase  text-truncate' style={style}>
+			<p className=' text-wrap text-uppercase  text-truncate ' style={style}>
 				{column}
 			</p>
-
-			/* 	<Link href='#'>
-				<a>{column}</a>
-			</Link> */
-			/* 	<a className='navbar-item text-truncate' href='#'>
-				
-			</a> */
 		);
 	}
 	const columns = [
@@ -132,7 +145,6 @@ export default function View({ cars }) {
 
 			//return <Form petForm={carForm} />;
 			router.push(`http://localhost:3000/${row._id}/edit`);
-			
 		},
 	};
 
