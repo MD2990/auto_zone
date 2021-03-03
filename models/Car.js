@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import { string } from 'yup';
 import { date } from 'yup';
 
 const MODEL_NAME = 'Car';
@@ -33,7 +34,7 @@ const schema = new Schema({
 		required: [true, 'Please add a rental fees'],
 	},
 	registration_expiry_date: {
-		type: Date,
+		type: String,
 		required: [true, 'Please add a Registration Expiry Date'],
 	},
 	available: {

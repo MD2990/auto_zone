@@ -55,18 +55,38 @@ export default function Edit_Delete_Form({ formData }) {
 	const handleDelete = async () => {
 		const url = `http://localhost:3000/View`;
 		const deleteUrl = `http://localhost:3000/api/cars/${formData.id}`;
+		try {
+			await axios.delete(deleteUrl);
+			setShow(false);
+			toast(
+				`Deleting	 ${formData.model} ...`,
 
-		await axios.delete(deleteUrl);
-		trigger(url);
-		router.push(url);
+				{
+					type: toast.TYPE.ERROR,
+					autoClose: 1800,
+				}
+			);
+			setTimeout(() => {
+				trigger(url);
+				router.push(url);
+			}, 2000);
+		} catch (error) {
+			setShow(false);
+			toast(
+				` Something went wrong, please try again`,
+
+				{
+					type: toast.TYPE.ERROR,
+					autoClose: 2500,
+				}
+			);
+		}
 	};
 
 	const handleShow = () => setShow(true);
 	const handleCancel = () => setShow(false);
 	//const handleDelete = () => setShow(false);
 	function showModal(show) {
-		console.log('im delete', show);
-
 		if (show)
 			return (
 				<ConfirmationModal
@@ -79,7 +99,6 @@ export default function Edit_Delete_Form({ formData }) {
 		return;
 	}
 
-	console.log('im rendring');
 	return (
 		<>
 			{showModal(show)}
@@ -120,7 +139,7 @@ export default function Edit_Delete_Form({ formData }) {
 								}, 1800);
 							} catch (error) {
 								toast(
-									'Somthing went wrong please check the car details and try again' +
+									'Something went wrong please check the car details and try again' +
 										error,
 									{
 										type: toast.TYPE.ERROR,

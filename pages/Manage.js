@@ -14,6 +14,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+var moment = require('moment');
 
 export default function FormPage() {
 	return (
@@ -37,6 +38,11 @@ export default function FormPage() {
 					}}
 					onSubmit={async (values, { resetForm, setSubmitting }) => {
 						try {
+							values.registration_expiry_date = moment(
+								values.registration_expiry_date
+							).format('YYYY-MM-DD');
+							console.log(moment.locale());
+							console.log(values.registration_expiry_date);
 							//moment(values.registration_expiry_date).format('MMMM Do YYYY');
 
 							/* 	mutate(
@@ -66,7 +72,8 @@ export default function FormPage() {
 							//trigger('http://localhost:3000/api/cars');
 						} catch (error) {
 							toast(
-								'Somthing went wrong please check the car details and try again',
+								'Something went wrong please check the car details and try again' +
+									error,
 								{
 									type: toast.TYPE.ERROR,
 									autoClose: 8000,
