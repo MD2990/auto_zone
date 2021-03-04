@@ -445,7 +445,7 @@ export default function Edit_Delete_Form({ formData }) {
 												<MDBIcon icon='paper-plane' className='ml-1 ' />
 											</MDBBtn>
 
-											<MDBBtn
+											<MDBBtn	
 												onClick={handleShow}
 												className='text-capitalize '
 												outline
