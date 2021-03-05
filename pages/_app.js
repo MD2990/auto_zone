@@ -9,6 +9,7 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { ToastContainer, Zoom } from 'react-toastify';
+import Layout from '../components/Layout';
 
 //NProgress.configure({ easing: 'ease', speed: 500 });
 NProgress.configure({ showSpinner: true });
@@ -29,7 +30,9 @@ function MyApp({ Component, pageProps }) {
 				autoClose={2000}
 				limit={1}
 				transition={Zoom}></ToastContainer>
-			<Component {...pageProps} />
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
 		</SWRConfig>
 	);
 }

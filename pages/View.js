@@ -18,11 +18,14 @@ import Link from 'next/link';
 import Form from '../components/Edit_Delete_Form';
 import { toast } from 'react-toastify';
 
-export default function View({ cars }) {
+export default function View({ allData }) {
 	const { SearchBar, ClearSearchButton } = Search;
 	const { ExportCSVButton } = CSVExport;
+	console.log(allData);
 	const router = useRouter();
-	const { data, error } = useSWR('http://localhost:3000/api/cars');
+	const { data, error } = useSWR('http://localhost:3000/api/cars', {
+		initialData: allData,
+	});
 
 	if (error)
 		return (
@@ -50,7 +53,7 @@ export default function View({ cars }) {
 		cursor: 'pointer',
 	};
 
-	mutate('http://localhost:3000/api/cars', data, false);
+	mutate('http://localhost:3000/api/cars', data, true);
 	function priceFormatter(column, colIndex) {
 		return (
 			<p className=' text-wrap text-uppercase  text-truncate ' style={style}>
@@ -141,9 +144,7 @@ export default function View({ cars }) {
 				model: row.model,
 				make: row.make,
 			};
-			///<Link href='/[id]/edit' as={`/${car._id}/edit`}></Link>
 
-			//return <Form petForm={carForm} />;
 			router.push(`http://localhost:3000/${row._id}/edit`);
 		},
 	};
@@ -209,8 +210,22 @@ export default function View({ cars }) {
 	);
 }
 
-View.getInitialProps = async (ctx) => {
+/* View.getInitialProps = async (ctx) => {
 	const res = await axios('http://localhost:3000/api/cars');
 	const json = res.data;
 	return { cars: json };
-};
+}; */
+export async function getServerSideProps(context) {
+	const res = await fetch(`http://localhost:3000/api/cars`);
+	const allData = await res.json();
+
+	if (!allData) {
+		return {
+			notFound: true,
+		};
+	}
+
+	return {
+		props: { allData }, // will be passed to the page component as props
+	};
+}

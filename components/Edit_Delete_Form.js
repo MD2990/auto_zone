@@ -29,7 +29,6 @@ export default function Edit_Delete_Form({ formData }) {
 		const { id } = router.query;
 
 		try {
-			console.log('im putting');
 			const res = await fetch(`/api/cars/${id}`, {
 				method: 'PUT',
 				headers: {
@@ -67,8 +66,7 @@ export default function Edit_Delete_Form({ formData }) {
 				}
 			);
 			setTimeout(() => {
-				trigger(url);
-				router.push(url);
+				router.replace(url);
 			}, 2000);
 		} catch (error) {
 			setShow(false);
@@ -135,7 +133,7 @@ export default function Edit_Delete_Form({ formData }) {
 									}
 								);
 								setTimeout(() => {
-									router.push('http://localhost:3000/View');
+									router.replace('http://localhost:3000/View');
 								}, 1800);
 							} catch (error) {
 								toast(
@@ -157,7 +155,7 @@ export default function Edit_Delete_Form({ formData }) {
 								}
 							);
 							setTimeout(() => {
-								router.push('http://localhost:3000/View');
+								router.replace('http://localhost:3000/View');
 							}, 1200);
 						}
 					}}
@@ -445,7 +443,7 @@ export default function Edit_Delete_Form({ formData }) {
 												<MDBIcon icon='paper-plane' className='ml-1 ' />
 											</MDBBtn>
 
-											<MDBBtn	
+											<MDBBtn
 												onClick={handleShow}
 												className='text-capitalize '
 												outline
