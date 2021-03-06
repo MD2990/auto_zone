@@ -45,7 +45,8 @@ export default function Edit_Delete_Form({ formData }) {
 
 			const { data } = await res.json();
 
-			mutate(`/api/cars/${id}`, data); // Update the local data without a revalidation
+			mutate(`/api/cars/${id}`, data, true); // Update the local data without a revalidation
+			trigger('http://localhost:3000/api/cars', formData, true);
 		} catch (error) {
 			console.log(error);
 		}
@@ -56,6 +57,8 @@ export default function Edit_Delete_Form({ formData }) {
 		const deleteUrl = `http://localhost:3000/api/cars/${formData.id}`;
 		try {
 			await axios.delete(deleteUrl);
+			trigger('http://localhost:3000/api/cars', formData, true);
+
 			setShow(false);
 			toast(
 				`Deleting	 ${formData.model} ...`,

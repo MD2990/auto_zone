@@ -14,3 +14,9 @@ html,
 body {
 	font-size: calc(30% + 0.5vw + 0.5vh);
 }
+.marBot {
+	margin-bottom: 65px;
+}
+.marTop {
+	margin-top: 6rem;
+}

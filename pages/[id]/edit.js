@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
+import useSWR, { mutate, trigger } from 'swr';
 import { date } from 'yup';
 import Edit_Delete_Form from '../../components/Edit_Delete_Form';
 const url = `http://localhost:3000/edit`;
+const errorUrl = `http://localhost:3000/View`;
 
 const EditCar = () => {
 	const router = useRouter();
@@ -11,7 +12,7 @@ const EditCar = () => {
 
 	const { data, error } = useSWR(`/api/cars/${id}`);
 
-	if (error) return <p>Failed to load</p>;
+	if (error) router.replace(errorUrl);
 	if (!data) return <p>Loading...</p>;
 
 	const carForm = {
@@ -27,6 +28,7 @@ const EditCar = () => {
 		available: data.available,
 		notes: data.notes,
 	};
+	trigger('http://localhost:3000/api/cars', carForm, true);
 
 	return <Edit_Delete_Form formData={carForm} />;
 };

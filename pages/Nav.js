@@ -1,6 +1,11 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
+import GetAllCars from '../components/GetAllCars';
+import ViewAllCars from '../components/ViewAllCars';
 
 export default function Nav() {
-	return <NavBar></NavBar>;
+	return (
+		<>
+			<GetAllCars></GetAllCars>
+		</>
+	);
 }

@@ -41,8 +41,7 @@ export default function FormPage() {
 							values.registration_expiry_date = moment(
 								values.registration_expiry_date
 							).format('YYYY-MM-DD');
-							console.log(moment.locale());
-							console.log(values.registration_expiry_date);
+
 							//moment(values.registration_expiry_date).format('MMMM Do YYYY');
 
 							/* 	mutate(

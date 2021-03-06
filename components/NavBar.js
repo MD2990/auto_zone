@@ -26,6 +26,7 @@ export default function NavBar() {
 	};
 
 	console.log(router.pathname);
+
 	return (
 		<>
 			<MDBNavbar fixed='top' color='indigo' dark expand='md'>
