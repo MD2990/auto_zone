@@ -1,55 +1,31 @@
 import React from 'react';
 import axios from 'axios';
+import { dbConnect, jsonify, Pre } from '../utils/dbConnect';
+import Car from '../models/Car';
 
-const fetchData = async () =>
-	await axios
-
-		.get('http://localhost:3000/api/cars/')
-		.then((res) => ({
-			error: false,
-			users: res.data.data,
-		}))
-		.catch(() => ({
-			error: true,
-			users: null,
-		}));
-const Users = ({ data, error }) => {
+const Users = ({ car }) => {
 	return (
-		<section>
-			<header>
-				<h1>List of users</h1>
-			</header>
-			{error && <div>There was an error.</div>}
-			{!error && data && (
-				<table>
-					<thead>
-						<tr>
-							<th>Username</th>
-							<th>Email</th>
-							<th>Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data.users.map((user, key) => (
-							<tr key={key}>
-								<td>{user.model}</td>
-								<td>{user.make}</td>
-								<td>{user.year}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			)}
-		</section>
+		<>
+			<h4 className='marTop'>{car.length}</h4>
+			<div>
+				{car.map((c) => {
+					return <div key={c._id}>{c.model}</div>;
+				})}
+			</div>
+		</>
 	);
 };
 
 // This function gets called at build time
 export const getStaticProps = async () => {
-	const data = await fetchData();
+	dbConnect();
+
+	const data = await Car.find({}); /* find all the data in our database */
+	const car = await jsonify(data);
+
 	return {
 		props: {
-			data,
+			car,
 		},
 		revalidate: 1,
 	};
