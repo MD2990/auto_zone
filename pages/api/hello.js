@@ -5,7 +5,7 @@
 }
  */
 
-import Cars from '../../models/Cars';
+import Cars from '../../models/Car';
 import dbConnect from '../../utils/dbConnect';
 
 export default async (req, res) => {

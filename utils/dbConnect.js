@@ -20,4 +20,8 @@ export function jsonify(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+export function Pre(obj) {
+	return <pre> {JSON.stringify(obj, null, 2)} </pre>;
+}
+
 export default dbConnect;

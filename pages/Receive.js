@@ -1,25 +1,17 @@
-function Blog({ posts }) {
+import React from 'react';
+
+export default function Blog() {
 	return (
 		<>
-			<div>
-				<ul>
-					{posts.data.map((car) => {
-						return (
-							<li key={car._id}>
-								Car: {car.name} / Model: {car.make}
-								<hr></hr>
-							</li>
-						);
-					})}
-				</ul>
-			</div>
+			<div>Hello</div>
 		</>
 	);
 }
 
-export async function getStaticProps() {
+/* export async function getStaticProps() {
 	const res = await fetch('http://localhost:3000/api/cars/');
 	const posts = await res.json();
+	posts = JSON.parse(JSON.stringify(posts));
 
 	return {
 		props: {
@@ -28,4 +20,4 @@ export async function getStaticProps() {
 	};
 }
 
-export default Blog;
+export default Blog; */

@@ -1,5 +1,4 @@
 import { dbConnect, jsonify } from '../utils/dbConnect';
-import Car from '../models/Cars';
 
 export async function getServerSideProps(context) {
 	dbConnect();

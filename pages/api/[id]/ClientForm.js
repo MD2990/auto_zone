@@ -1,18 +1,15 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
-import useSWR, { mutate, trigger } from 'swr';
-import { date } from 'yup';
-import Edit_Delete_Form from '../../components/Edit_Delete_Form';
+import useSWR from 'swr';
+import CustomerRentFormComponent from '../../../components/CustomerRentFormComponent';
 const url = `http://localhost:3000/edit`;
-const errorUrl = `http://localhost:3000/View`;
 
-const EditCar = () => {
+const ClientForm = () => {
 	const router = useRouter();
 	const { id } = router.query;
 
 	const { data, error } = useSWR(`/api/cars/${id}`);
 
-	if (error) router.replace(errorUrl);
+	if (error) return <p>Failed to load</p>;
 	if (!data) return <p>Loading...</p>;
 
 	const carForm = {
@@ -28,9 +25,8 @@ const EditCar = () => {
 		available: data.available,
 		notes: data.notes,
 	};
-	trigger('http://localhost:3000/api/cars', carForm, true);
 
-	return <Edit_Delete_Form formData={carForm} />;
+	return <CustomerRentFormComponent carInfo={carForm} />;
 };
 
-export default EditCar;
+export default ClientForm;
