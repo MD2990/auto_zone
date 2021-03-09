@@ -17,7 +17,7 @@ export default function Example({ show, handleCancel, handleDelete, car }) {
 					<Button variant='info' onClick={handleCancel}>
 						Cancel
 					</Button>
-					<Button variant='danger' onClick={handleDelete}>
+					<Button variant='danger' onClick={() => handleDelete()}>
 						Delete and Close
 					</Button>
 				</Modal.Footer>

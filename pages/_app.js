@@ -26,10 +26,7 @@ Router.events.on('routeChangeError', () => {
 function MyApp({ Component, pageProps }) {
 	return (
 		<SWRConfig value={{ fetcher: (url) => axios(url).then((r) => r.data) }}>
-			<ToastContainer
-				autoClose={2000}
-				limit={1}
-				transition={Zoom}></ToastContainer>
+			<ToastContainer autoClose={2000} limit={1} transition={Zoom} />
 			<Layout>
 				<Component {...pageProps} />
 			</Layout>

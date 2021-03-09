@@ -19,7 +19,7 @@ export default function AlertDismissible() {
 								color: 'blue',
 								size: '15em',
 							}}>
-							<Link href='/Receive'>
+							<Link href='/View'>
 								<a style={{ textDecoration: 'none' }}>
 									<IoCarSportSharp />
 									<h3 className={`${styles.link_fonts} text-truncate`}>
