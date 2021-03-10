@@ -1,3 +1,3 @@
 export default function AllCars() {
-	return <h1>hi</h1>;
+	return <h1>AllCars</h1>;
 }

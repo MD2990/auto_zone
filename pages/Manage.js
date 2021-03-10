@@ -14,8 +14,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-var moment = require('moment');
-
+/* var moment = require('moment');
+ */
 export default function FormPage() {
 	return (
 		<>
@@ -38,9 +38,9 @@ export default function FormPage() {
 					}}
 					onSubmit={async (values, { resetForm, setSubmitting }) => {
 						try {
-							values.registration_expiry_date = moment(
+							/* 	values.registration_expiry_date = moment(
 								values.registration_expiry_date
-							).format('YYYY-MM-DD');
+							).format('YYYY-MM-DD'); */
 
 							//moment(values.registration_expiry_date).format('MMMM Do YYYY');
 

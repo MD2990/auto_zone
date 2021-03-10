@@ -3,10 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
-import { IoCarSportSharp, IoCarSportOutline } from 'react-icons/io5';
-
 import { AiFillFileAdd, AiFillEdit } from 'react-icons/ai';
-
 import styles from '../styles/main.module.css';
 import { IconContext } from 'react-icons';
 

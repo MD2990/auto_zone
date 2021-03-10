@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { ToastContainer, Zoom } from 'react-toastify';
 import Layout from '../components/Layout';
+import 'react-bootstrap';
 
 //NProgress.configure({ easing: 'ease', speed: 500 });
 NProgress.configure({ showSpinner: true });

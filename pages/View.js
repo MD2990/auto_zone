@@ -15,6 +15,8 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import fetch from 'isomorphic-unfetch';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import dbConnect, { jsonify } from '../utils/dbConnect';
+import Car from '../models/Car';
 const url = `http://localhost:3000/edit`;
 const errorUrl = `http://localhost:3000/View`;
 
@@ -222,13 +224,13 @@ export default function View({ car }) {
 		firstPageTitle: 'Next page',
 		lastPageTitle: 'Last page',
 		showTotal: true,
-		totalSize: car.car.length,
+		totalSize: car.length,
 	};
 
 	const contentTable = ({ paginationProps, paginationTableProps }) => (
 		<div>
 			<PaginationListStandalone {...paginationProps} />
-			<ToolkitProvider keyField='_id' columns={columns} data={data.car} search>
+			<ToolkitProvider keyField='_id' columns={columns} data={car} search>
 				{(toolkitprops) => (
 					<div>
 						<SearchBar {...toolkitprops.searchProps} />
@@ -241,7 +243,7 @@ export default function View({ car }) {
 							condensed
 							bootstrap4
 							keyField='_id'
-							data={data.car}
+							data={car}
 							columns={columns}
 							defaultSorted={defaultSorted}
 							defaultSortDirection='asc'
@@ -269,6 +271,27 @@ export default function View({ car }) {
 }
 
 export const getStaticProps = async () => {
+	dbConnect();
+	const data = await Car.find({});
+	const car = await jsonify(data);
+	if (!car) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		};
+	}
+
+	return {
+		props: {
+			car,
+		},
+		revalidate: 1,
+	};
+};
+
+/* export const getStaticProps = async () => {
 	const fetcher = (url) => fetch(url).then((r) => r.json());
 
 	const car = await fetcher('http://localhost:3000/api/cars');
@@ -288,4 +311,4 @@ export const getStaticProps = async () => {
 		},
 		revalidate: 1,
 	};
-};
+}; */

@@ -29,9 +29,6 @@ export default function RentForm({ carData }) {
 		setSearchTerm('');
 		inputReference.current.focus();
 	};
-	const render = (id) => {
-		return router.push(`CustomerRentForm/603f56357d8ed12b18f8eee1`);
-	};
 
 	return (
 		<>
@@ -100,9 +97,7 @@ export default function RentForm({ carData }) {
 											<MDBBtn
 												className='btn btn-sm btn-info'
 												onClick={() =>
-													router.push(
-														`http://localhost:3000/${car._id}/ClientForm`
-													)
+													router.push(`http://localhost:3000/${car._id}/cl`)
 												}>
 												Rent
 												<MDBIcon icon='cog' spin size='1x' fixed />

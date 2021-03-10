@@ -8,7 +8,7 @@ import { FcEditImage } from 'react-icons/fc';
 import styles from '../styles/main.module.css';
 import { IconContext } from 'react-icons';
 
-export default function AlertDismissible() {
+export default function Main() {
 	return (
 		<>
 			<Container className='text-center'>

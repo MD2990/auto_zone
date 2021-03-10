@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import Example from '../components/Main';
+import Main from '../components/Main';
 
 export default function Home() {
-	return <Example></Example>;
+	return <Main />;
 }
 
 /* 
