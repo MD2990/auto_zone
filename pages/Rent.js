@@ -7,7 +7,7 @@ import dbConnect, { jsonify } from '../utils/dbConnect';
 const url = `http://localhost:3000/api/available`;
 
 const Rent = ({ car }) => {
-	/* 	const { data, error } = useSWR(url, {
+	const { data, error } = useSWR('/api/available', {
 		initialData: car,
 	});
 
@@ -31,12 +31,9 @@ const Rent = ({ car }) => {
 					<h6 className=' ml-xl-n2 mt-xl-5  text-nowrap '>Loading ...</h6>
 				</div>
 			</div>
-		); */
-	return (
-		<>
-			<RentForm carData={car} />;
-		</>
-	);
+		);
+
+	return <RentForm carData={data} />;
 };
 
 export default Rent;

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 				const car = await Car.find({
 					available: true,
 				});
-				res.status(200).json({ data: car });
+				res.status(200).json(car);
 			} catch (error) {
 				res.status(400).json({ success: false });
 			}

@@ -1,18 +1,14 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import useSWR, { mutate, fetcher } from 'swr';
-import fetch from 'isomorphic-unfetch';
 import { dbConnect, jsonify } from '../../utils/dbConnect';
 import Car from '../../models/Car';
 
-export default function cl({ car }) {
+export default function clientForm({ car }) {
 	const router = useRouter();
-	const { id } = router.query;
-	const { data, error } = useSWR(`/api/available/${id}`, { initialData: car });
-
-	if (error) router.replace('/');
-	if (!data) return <p>Loading...</p>;
-
+	if (router.isFallback) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<div>
 			cars: {car.make}

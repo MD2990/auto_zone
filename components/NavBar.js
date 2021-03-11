@@ -25,10 +25,8 @@ export default function NavBar() {
 		setIsOpen(!isOpen);
 	};
 
-	console.log(router.pathname);
-
 	return (
-		<>
+		<div className='marBot'>
 			<MDBNavbar fixed='top' color='indigo' dark expand='md'>
 				<MDBNavbarBrand>
 					<strong className='white-text'>Auto Zone</strong>
@@ -106,6 +104,6 @@ export default function NavBar() {
 					</MDBNavbarNav>
 				</MDBCollapse>
 			</MDBNavbar>
-		</>
+		</div>
 	);
 }

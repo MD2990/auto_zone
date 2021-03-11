@@ -12,7 +12,6 @@ import paginationFactory, {
 } from 'react-bootstrap-table2-paginator';
 import BootstrapTable from 'react-bootstrap-table-next';
 
-import fetch from 'isomorphic-unfetch';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import dbConnect, { jsonify } from '../utils/dbConnect';
@@ -57,13 +56,17 @@ export default function View({ car }) {
 	function priceFormatter(column, colIndex) {
 		return (
 			<p
-				className=' text-wrap text-uppercase  text-truncate disabled '
+				className=' text-wrap text-uppercase  text-truncate disabled text-lead 
+				justify-content-center  '
 				style={style}>
 				{column}
 			</p>
 		);
 	}
-
+	const header_class = {
+		header:
+			'text-center form-control-lg  bg-info text-nowrap text-uppercase text-white-50 font-weight-bolder ',
+	};
 	function editBtnFormatter(column, colIndex) {
 		return (
 			<button className=' btn btn-info btn-sm'>
@@ -71,25 +74,8 @@ export default function View({ car }) {
 			</button>
 		);
 	}
-	function deleteBtnFormatter(column, colIndex) {
-		const len = column.toString().length;
-		return (
-			<button className=' btn btn-danger btn-sm'>
-				{column.toString().substring(len) + 'Delete'}
-			</button>
-		);
-	}
+
 	const columns = [
-		{
-			dataField: '_id',
-			text: 'Edit',
-			formatter: editBtnFormatter,
-		},
-		{
-			dataField: `available`,
-			text: 'Delete',
-			formatter: deleteBtnFormatter,
-		},
 		{
 			dataField: 'model',
 			text: 'Car Model',
@@ -135,26 +121,22 @@ export default function View({ car }) {
 		},
 		{
 			dataField: 'registration_expiry_date',
-			text: 'Registration Expiry_Date',
+			text: 'Registration Exp Date',
 			sort: true,
 			formatter: priceFormatter,
 		},
-		/* {
-			dataField: 'available',
-			text: 'Available',
-			sort: true,
 
-			editor: {
-				type: Type.CHECKBOX,
-				value: 'true:false',
-			},
-		}, */
 		{
 			dataField: 'notes',
 			text: 'Notes',
 			sort: true,
 			width: 150,
 			formatter: priceFormatter,
+		},
+		{
+			dataField: '_id',
+			text: 'Edit',
+			formatter: editBtnFormatter,
 		},
 	];
 	const rowStyle = (row, rowIndex) => {
@@ -206,7 +188,7 @@ export default function View({ car }) {
 			}
 
 			if (e.target.textContent === 'Edit') {
-				router.push(`http://localhost:3000/${row._id}`);
+				router.push(`http://localhost:3000/${row._id}/edit`);
 			}
 		},
 	};
@@ -238,11 +220,12 @@ export default function View({ car }) {
 						<BootstrapTable
 							{...toolkitprops.baseProps}
 							{...paginationTableProps}
+							keyField='_id'
+							headerClasses={header_class.header}
 							striped
 							hover
 							condensed
 							bootstrap4
-							keyField='_id'
 							data={car}
 							columns={columns}
 							defaultSorted={defaultSorted}

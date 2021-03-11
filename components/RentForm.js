@@ -1,5 +1,4 @@
 import { MDBBtn, MDBIcon } from 'mdbreact';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col, Container, Card, FormControl } from 'react-bootstrap';
@@ -97,7 +96,9 @@ export default function RentForm({ carData }) {
 											<MDBBtn
 												className='btn btn-sm btn-info'
 												onClick={() =>
-													router.push(`http://localhost:3000/${car._id}/cl`)
+													router.push(
+														`http://localhost:3000/${car._id}/clientForm`
+													)
 												}>
 												Rent
 												<MDBIcon icon='cog' spin size='1x' fixed />
